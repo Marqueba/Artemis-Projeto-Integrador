@@ -22,10 +22,8 @@
 #### Desenvolvimento 
 
 * Python
-* Gitlab
 * Github
-* React JS
-* Tailwind CSS
+* SQLite
 
 ## Contato dos desenvolvedores
 
