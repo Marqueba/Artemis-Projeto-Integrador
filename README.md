@@ -2,28 +2,25 @@
 
 É o projeto integrador desenvolvido por alunos do 2° ano de informática vespertino do Instituto Federal de Educação, Ciência e Tecnologia de Rondônia Campus Porto Velho Calama para obtenção de notas nas disciplinas de Banco de Dados, Fundamentos de Análises de Sistemas, Linguagem de Programação e Programação Orientada a Objetos. O objetivo deste projeto é desenvolver as habilidades trabalhadas em cada uma dessas disciplinas criando um planner que auxilie na organização de discentes e doscentes.
 
-### Preview do Projeto
+### Página Inicial
 ![Página Inicial](./.github/preview.png)
 
-## Colaboradores do Projeto
+### Página Inicial
+![Página Inicial](./.github/preview.png)
 
-* Marcos Reis Dutra
-* João Pedro Monteiro Ferreira
-* Nicolle Cristini Dias
-* Isabella Cristina Queiroz
+## Tecnologias Utilizadas
+- ``Python``
+- ``Tkinter``
+- ``SQLite``
 
-#### Ferramentas Utilizadas no Planejamento
+## Contato
 
-* Canva 
-* Lucidchart
-* Astah
-* Figma
+| [<img src="https://avatars.githubusercontent.com/u/112917982?v=4" width=115><br><sub>Marcos Reis Dutra</sub>](https://github.com/Marqueba)
+| [<img src="https://avatars.githubusercontent.com/u/112917982?v=4" width=115><br><sub>Marcos Reis Dutra</sub>](https://github.com/Marqueba)
+| [<img src="https://avatars.githubusercontent.com/u/112917982?v=4" width=115><br><sub>Marcos Reis Dutra</sub>](https://github.com/Marqueba)
+| [<img src="https://avatars.githubusercontent.com/u/112917982?v=4" width=115><br><sub>Marcos Reis Dutra</sub>](https://github.com/Marqueba)
 
-#### Desenvolvimento 
 
-* Python
-* Github
-* SQLite
 
 ## Contato dos desenvolvedores
 
