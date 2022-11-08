@@ -15,5 +15,5 @@
 
 ## Contato
 
-| [<img src="https://avatars.githubusercontent.com/u/112917982?v=4" width=115><br><sub>Marcos Reis Dutra</sub>](https://github.com/Marqueba)| [<img src="https://avatars.githubusercontent.com/u/115268953?v=4" width=115><br><sub>Nicolle Cristini Dias</sub>](https://github.com/Nicolledias13)| [<img src="https://avatars.githubusercontent.com/u/115313447?v=4" width=115><br><sub>Isabella Cristina Queiroz </sub>](https://github.com/isabug05)| [<img src="https://avatars.githubusercontent.com/u/91398622?v=4" width=115><br><sub>João Pedro Monteiro Ferreira</sub>](https://github.com/Joao-Pedro-m)
-
+| [<img src="https://avatars.githubusercontent.com/u/112917982?v=4" width=115><br><sub>Marcos Reis Dutra</sub>](https://github.com/Marqueba)| [<img src="https://avatars.githubusercontent.com/u/115268953?v=4" width=115><br><sub>Nicolle Cristini Dias</sub>](https://github.com/Nicolledias13)| [<img src="https://avatars.githubusercontent.com/u/115313447?v=4" width=115><br><sub>Isabella Cristina Queiroz </sub>](https://github.com/isabug05)| [<img src="https://avatars.githubusercontent.com/u/91398622?v=4" width=115><br><sub>João Pedro Monteiro Ferreira</sub>](https://github.com/Joao-Pedro-m) |
+| :---: | :---: |
