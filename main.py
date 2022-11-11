@@ -278,6 +278,145 @@ def tela_agendamentos():
                       command=deletar)
   bt_deletar.place(width=80, height=25, x=195, y=398)
 
+  # Inserir Agendamentos
+  def inserir():
+    global usuario_atual
+    nome = en_nome.get()
+    dia = e_cal.get()
+    descricao = en_descricao.get(1.0, 'end')
+    id = usuario_atual.get_id()
+    lista = [nome, dia, descricao, id]
+
+    if nome is None:
+      messagebox.showerror('Erro', 'O nome não pode ser vazio')
+    else:
+      agendamento.inserir_info(lista)
+      messagebox.showinfo('Sucesso', 'Os dados foram inseridos com sucesso')
+
+      en_nome.delete(0, 'end')
+      e_cal.delete(0, 'end')
+      en_descricao.delete(1.0, 'end')
+    for widget in direita.winfo_children():
+      widget.destroy()
+
+    mostrar()
+
+# Atualizar agendamentos
+
+  def atualizar():
+    try:
+      treev_dados = tree.focus()
+      treev_dicionario = tree.item(treev_dados)
+      tree_lista = treev_dicionario['values']
+
+      valor_id = tree_lista[0]
+
+      en_nome.delete(0, 'end')
+      e_cal.delete(0, 'end')
+      en_descricao.delete(1.0, 'end')
+
+      en_nome.insert(0, tree_lista[1])
+      e_cal.insert(0, tree_lista[2])
+      en_descricao.insert(1.0, tree_lista[3])
+
+      def update():
+        nome = en_nome.get()
+        dia = e_cal.get()
+        descricao = en_descricao.get(1.0, 'end')
+
+        lista = [nome, dia, descricao, valor_id]
+
+        if nome == '':
+          messagebox.showerror('Erro', 'O nome não pode ser vazio')
+        else:
+          agendamento.atualizar_info(lista)
+          messagebox.showinfo('Sucesso',
+                              'Os dados foram atualizados com sucesso')
+
+          en_nome.delete(0, 'end')
+          e_cal.delete(0, 'end')
+          en_descricao.delete(1.0, 'end')
+
+        for widget in direita.winfo_children():
+          widget.destroy()
+
+        mostrar()
+
+      # Botão Confirmar atualizações
+      b_confirmar = Button(
+        janelaAgenda,
+        bd=0,
+        image=img_botaoconfirma,
+        command=lambda: [update(), b_confirmar.destroy()])
+      b_confirmar.place(width=80, height=25, x=100, y=370)
+
+    except IndexError:
+      messagebox.showerror('Erro', 'Seleciona um dos dados na tabela')
+
+  # Função Atualizar
+  def deletar():
+    try:
+      treev_dados = tree.focus()
+      treev_dicionario = tree.item(treev_dados)
+      tree_lista = treev_dicionario['values']
+
+      valor_id = [tree_lista[0]]
+
+      agendamento.deletar_info(valor_id)
+      messagebox.showinfo('Sucesso',
+                          'Os dados foram deletados da tabela com sucesso')
+
+      for widget in direita.winfo_children():
+        widget.destroy()
+
+      mostrar()
+
+    except IndexError:
+      messagebox.showerror('Erro', 'Seleciona um dos dados na tabela')
+
+
+#################################
+
+  def mostrar():
+    global tree
+    global usuario_atual
+    id = usuario_atual.get_id()
+    lista = agendamento.mostrar_info(id)
+    # agendamentos = []
+    # for i,value in enumerate(lista):
+    #   agendamentos.append(agendamento(lista[0], lista[1], lista[2], lista[3], lista[4]))
+    # Lista para cabeçario
+    tabela_header = ['Nº', 'Nome', 'Data', 'Descrição']
+
+    # Criando a Tabela
+    tree = ttk.Treeview(direita,
+                        height=17,
+                        selectmode="extended",
+                        columns=tabela_header,
+                        show="headings")
+
+    # Vertical scrollbar
+    vsb = ttk.Scrollbar(direita, orient="vertical", command=tree.xview)
+
+    tree.configure(yscrollcommand=vsb.set)
+    tree.grid(column=0, row=0, sticky='nsew')
+    vsb.grid(column=1, row=0, sticky='ns')
+
+    direita.grid_rowconfigure(0, weight=12)
+
+    hd = ['nw', 'nw', 'center', 'nw']
+    h = [30, 140, 120, 280]
+    n = 0
+
+    for col in tabela_header:
+      tree.heading(col, text=col.title(), anchor=CENTER)
+      # adjust the column's width to the header string
+      tree.column(col, width=h[n], anchor=hd[n])
+
+      n += 1
+    for item in lista:
+      tree.insert('', 'end', values=item)
+
   # Chamando a função mostrar
   mostrar()
   janelaAgenda.mainloop()
