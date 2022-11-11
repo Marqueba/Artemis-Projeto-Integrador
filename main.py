@@ -203,7 +203,7 @@ def tela_ajuda():
   bt_voltar = Button(janelaAjuda, bd=0, image=img_botaovoltar, command=lambda: [janelaAjuda.destroy(), tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
-   bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'A sua senha é: {usuario.get_senha(en_username.get())}') ] if local_valido(en_username.get(), en_local.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
+  bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'A sua senha é: {usuario.get_senha(en_username.get())}') ] if local_valido(en_username.get(), en_local.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
   bt_recuperar.place(width=200, height=50, x=350, y=341)
 
   def local_valido(username, backup):
