@@ -1,7 +1,3 @@
-class excecaoGenerica(Exception):
-  pass
-
-
 class UsuarioSenhaVazio(Exception):
   pass
 

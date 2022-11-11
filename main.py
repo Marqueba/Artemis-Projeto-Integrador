@@ -421,3 +421,17 @@ def tela_agendamentos():
   mostrar()
   janelaAgenda.mainloop()
 
+
+def login_valido(username, senha):
+  global usuario_atual
+  if username and senha:
+    if usuario.get_senha(username) != senha:
+      return False
+    else:
+      user = usuario.get_usuario(username)
+      usuario_atual = usuario(user[0][1], user[0][2], user[0][3])
+      return True
+  else:
+    return False
+
+tela_inicial()
