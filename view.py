@@ -87,3 +87,41 @@ class usuario:
         title='ERRO',
         message='Usuário e/ou senha e/ou local não podem ser vazios')
       return False
+
+
+class agendamento:
+
+  def __init__(self, nome, data, des, id_user):
+    self.__id = id
+    self.__nome = nome
+    self.__data = data
+    self.__descricao = des
+    self.__id_user = id_user
+
+  def inserir_info(i):
+    with conexao:
+      cur = conexao.cursor()
+      query = "INSERT INTO agendamento (nome, dia_agendamento, descricao,id_user) VALUES (?, ?, ?, ?)"
+      cur.execute(query, i)
+
+  # Visualizar informações
+  def mostrar_info(id_user):
+    lista = []
+    informacao = acessar_bd("*", "agendamento", "id_user", id_user)
+    for i in informacao:
+      lista.append(i)
+    return lista
+
+  # Atualizar Informações
+  def atualizar_info(i):
+    with conexao:
+      cur = conexao.cursor()
+      query = "UPDATE agendamento SET nome=?, dia_agendamento=?, descricao=? WHERE id=?"
+      cur.execute(query, i)
+
+  # Deletar Informações
+  def deletar_info(i):
+    with conexao:
+      cur = conexao.cursor()
+      query = "DELETE FROM agendamento WHERE id=?"
+      cur.execute(query, i)
