@@ -77,6 +77,7 @@ def senhaForte(senha:str):
     messagebox.showerror(title='ATENÇÃO!', message='Senha fraca - deve conter pelo menos um número')
     return False
 
-testes = ["A1!aaaa","A1!aaaaa","A1!aaaaaaaaaaaaaaaaa","A1!aaaaaaaaaaaaaaaaaa"]
-for teste in testes:
-  print(f"{len(teste):>5}",teste,"é uma senha valida" if senhaForte(teste) else "não é uma senha valida" )
+if __name__ == "__main__":
+  testes = ["A1!aaaa","A1!aaaaa","A1!aaaaaaaaaaaaaaaaa","A1!aaaaaaaaaaaaaaaaaa"]
+  for teste in testes:
+    print(f"{len(teste):>5}",teste,"é uma senha valida" if senhaForte(teste) else "não é uma senha valida" )

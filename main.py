@@ -45,6 +45,7 @@ from tkcalendar import Calendar
 from tkcalendar import DateEntry
 
 
+
 # Declaração de variaveis globais
 conexao = lite.connect('Bancodedados.db')
 global usuario_atual
@@ -220,7 +221,6 @@ def tela_ajuda():
     else:
       return False
 
-  
   janelaAjuda.mainloop()
 
 

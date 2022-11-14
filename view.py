@@ -13,6 +13,9 @@ conexao = lite.connect('Bancodedados.db')
 from tkinter import messagebox
 
 
+# Importando sistema de validação de senha
+import senhaValida
+
 def acessar_bd(atributos, tabela, chave, chave2):
   with conexao:
     cur = conexao.cursor()
@@ -63,11 +66,7 @@ class usuario:
         messagebox.showwarning(title='ATENÇÃO',
                                message='Este nome não está disponível!')
         return False
-      elif not (3 < len(senha) < 20):
-        messagebox.showwarning(
-          title='ATENÇÃO!',
-          message=
-          'Tamanho mínimo da Senha é 3 caracteres e máximo de 20 caracteres')
+      elif not senhaValida.senhaForte(senha):
         return False
       elif not (5 < len(backup) < 20):
         messagebox.showwarning(
