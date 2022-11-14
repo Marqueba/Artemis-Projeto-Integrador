@@ -38,6 +38,10 @@ class SenhaFracaError(Exception):
 
 class EmailInvalidoError(Exception):
   pass
+  
+
+class EmailIndisponivelError(Exception):
+  pass
 
 
 def acessar_bd(atributos: str, tabela: str, chave: str, chave2: str) -> list:
@@ -57,26 +61,30 @@ class usuario:
     self.__email: str = email
     self.__adm: int = adm
 
-  def get_senha(username: str) -> str:
-    senha_user = acessar_bd('senha', 'usuario', 'nome', username)
+  def get_senha(nome: str) -> str:
+    senha_user = acessar_bd('senha', 'usuario', 'nome', nome)
     if senha_user:
       return senha_user[0][0]
 
-  def get_email(username: str) -> str:
-    email = acessar_bd('email', 'usuario', 'nome', username)
+  def get_email(nome: str) -> str:
+    email = acessar_bd('email', 'usuario', 'nome', nome)
     if email:
       return email[0][0]
 
-  def get_usuario(username: str) -> list:
-    user = acessar_bd('*', 'usuario', 'nome', username)
+  def get_usuario(nome: str) -> list:
+    user = acessar_bd('*', 'usuario', 'nome', nome)
     return user
 
   def get_id(self: object):
     id_user = acessar_bd('id', 'usuario', 'nome', self.__nome)
     return id_user[0][0]
 
-  def nome_disponivel(username: str) -> bool:
-    user = acessar_bd('nome', 'usuario', 'nome', username)
+  def nome_disponivel(nome: str) -> bool:
+    user = acessar_bd('nome', 'usuario', 'nome', nome)
+    return False if user else True
+
+  def email_disponivel(email: str) -> bool:
+    user = acessar_bd('email', 'usuario', 'email', email)
     return False if user else True
 
   def cadastro_user(nome: str, senha: str, email: str) -> bool:
@@ -88,7 +96,10 @@ class usuario:
         raise TamanhoNomeError
         
       elif not usuario.nome_disponivel(nome):
-        raise NomeIndisponivelError
+        raise NomeIndisponivelError      
+      
+      elif not usuario.email_disponivel(email):
+        raise EmailIndisponivelError
 
       elif not senhaValida.senhaForte(senha):
         raise SenhaFracaError
@@ -96,20 +107,27 @@ class usuario:
       elif not emailValido.verificarEmail(email):
         raise EmailInvalidoError
 
-      """ Criar uma exceção para email disponivel """
-
     except UsuarioSenhaEmailVazioError:
       return False
+      
     except TamanhoNomeError:
       messagebox.showerror('ATENÇÃO!','Tamanho mínimo do Nome é 5 caracteres e máximo de 20 caracteres')
       return False
+      
     except NomeIndisponivelError:
       messagebox.showerror('ATENÇÃO','Este nome não está disponível!')
       return False
+      
     except SenhaFracaError:
       return False
+      
     except EmailInvalidoError:
       return False
+      
+    except EmailIndisponivelError:
+      messagebox.showerror('ATENÇÃO','Este nome não está disponível!')
+      return False
+      
     else:
       with conexao:
         i = [nome, senha, email]
