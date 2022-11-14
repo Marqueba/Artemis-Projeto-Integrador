@@ -2,17 +2,18 @@
 import smtplib
 import email.message
 
-def enviar_email():  
-    corpo_email = """
-    <p>Opa teste nº 1</p>
-
-    """
+def enviar_email(email_user):  
+    nome = ''
+    senha = ''
+    
+    corpo_email = """ <p>Olá {}!!!</p> 
+                      <p>Sua senha é {}</p>""".format(nome, senha)
 
     msg = email.message.Message()
-    msg['Subject'] = "Assunto"
-    msg['From'] = 'remetente'
-    msg['To'] = 'destinatario'
-    password = 'senha' 
+    msg['Subject'] = "Recuperação de Senha"
+    msg['From'] = 'ifro.suporteartemis@gmail.com'
+    msg['To'] = '{}'.format(email_user)
+    password = 'uavnkuogzdbovfjh' 
     msg.add_header('Content-Type', 'text/html')
     msg.set_payload(corpo_email )
 

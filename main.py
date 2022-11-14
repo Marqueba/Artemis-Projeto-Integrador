@@ -264,7 +264,7 @@ def tela_agendamentos():
     descricao = en_descricao.get(1.0, 'end')
     id = usuario_atual.get_id()
     
-    lista = agendamento(nome, dia, descricao, id)
+    lista = agendamento(None, nome, dia, descricao, id)
 
     if nome is None:
       messagebox.showerror('Erro', 'O nome não pode ser vazio')
@@ -360,12 +360,23 @@ def tela_agendamentos():
     global tree
     global usuario_atual
     id = usuario_atual.get_id()
+    print(id)
     lista = agendamento.mostrar_info(id)
-    # agendamentos = []
-    # for i,value in enumerate(lista):
-    #   agendamentos.append(agendamento(lista[0], lista[1], lista[2], lista[3], lista[4]))
-    # Lista para cabeçario
-    tabela_header = ['', 'Nome', 'Data', 'Descrição']
+    
+    agendamentos = []
+    for value in lista:
+      agendamentos.append(
+        agendamento(
+          value[0], 
+          value[1], 
+          value[2],
+          value[3],
+          value[4]
+        )
+      )
+    
+    #Lista para cabeçario
+    tabela_header = ['id', 'Nome', 'Data', 'Descrição']
 
     # Criando a Tabela
     tree = ttk.Treeview(direita,
@@ -393,8 +404,8 @@ def tela_agendamentos():
       tree.column(col, width=h[n], anchor=hd[n])
 
       n += 1
-    for item in lista:
-      tree.insert('', 'end', values=item)
+    for i,item in enumerate(agendamentos):
+      tree.insert('', 'end', values=[i,item.get_nome(),item.get_data(),item.get_des])
   
   # Criação dos botões
   bt_voltar = Button(janelaAgenda,
@@ -437,5 +448,20 @@ def login_valido(username, senha):
       return True
   else:
     return False
+
+    
+debug:bool or int = 0 
+if debug:
+  with conexao:
+            i = ["adm", "adm", "adm"]
+            cur = conexao.cursor()
+            query = "INSERT INTO usuario (nome, senha, backup) VALUES (?, ?, ?)"
+            cur.execute(query, i)
+  with conexao:
+      cur = conexao.cursor()
+      query = f"SELECT * FROM usuario"
+      cur.execute(query)
+      lista = cur.fetchall()
+  print(lista)
 
 tela_inicial()

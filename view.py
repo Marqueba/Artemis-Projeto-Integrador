@@ -89,14 +89,30 @@ class usuario:
 
 
 class agendamento:
-
-  def __init__(self, nome, data, des, id_user):
+  def __init__(self, id:id, nome:str, data:str, des:str, id_user:int):
     self.__id = id
     self.__nome = nome
     self.__data = data
     self.__descricao = des
     self.__id_user = id_user
 
+  
+  def set_id(self, id):
+    self.__id = id
+
+    
+  def get_nome(self):
+    return self.__nome 
+
+    
+  def get_data(self):
+    return self.__data
+
+    
+  def get_des(self):
+    return self.__descricao
+
+    
   def inserir_info(self):
     i = [self.__nome, self.__data, self.__descricao, self.__id_user]
     with conexao:
