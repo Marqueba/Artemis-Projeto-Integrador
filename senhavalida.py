@@ -61,19 +61,20 @@ def senhaForte(senha:str):
     else:
       return True
   except TamanhoSenhaError:
-    #print("TamanhoSenhaError")
+    messagebox.showerror(title='ATENÇÃO!', message='Tamanho mínimo da Senha é 8 caracteres e máximo é 20.')
+
     return False
   except naoContemCaractereMaiusculoError:
-    #print("naoContemCaractereMaiusculoError")
+    messagebox.showerror(title='ATENÇÃO!', message='Senha fraca - deve conter pelo menos uma letra maiuscula')
     return False
   except naoContemCaractereMinusculoError:
-    #print("naoContemCaractereMinusculoError")
+    messagebox.showerror(title='ATENÇÃO!', message='Senha fraca - deve conter pelo menos uma letra minuscula')
     return False
   except naoContemCaractereEspecialError:
-    #print("naoContemCaractereEspecialError")
+    messagebox.showerror(title='ATENÇÃO!', message='Senha fraca - deve conter pelo menos um caractere especial')
     return False
   except naoContemNumeroError:
-    #print("naoContemNumeroError")
+    messagebox.showerror(title='ATENÇÃO!', message='Senha fraca - deve conter pelo menos um número')
     return False
 
 testes = ["A1!aaaa","A1!aaaaa","A1!aaaaaaaaaaaaaaaaa","A1!aaaaaaaaaaaaaaaaaa"]
