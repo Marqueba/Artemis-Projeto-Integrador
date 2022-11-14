@@ -98,7 +98,8 @@ class agendamento:
     self.__descricao = des
     self.__id_user = id_user
 
-  def inserir_info(i):
+  def inserir_info(self):
+    i = [self.__nome, self.__data, self.__descricao, self.__id_user]
     with conexao:
       cur = conexao.cursor()
       query = "INSERT INTO agendamento (nome, dia_agendamento, descricao,id_user) VALUES (?, ?, ?, ?)"
@@ -113,14 +114,16 @@ class agendamento:
     return lista
 
   # Atualizar Informações
-  def atualizar_info(i):
+  def atualizar_info(self):
+    i = [self.__nome, self.__data, self.__descricao, self.__id_user]
     with conexao:
       cur = conexao.cursor()
       query = "UPDATE agendamento SET nome=?, dia_agendamento=?, descricao=? WHERE id=?"
       cur.execute(query, i)
 
   # Deletar Informações
-  def deletar_info(i):
+  def deletar_info(self):
+    i = self.__nome
     with conexao:
       cur = conexao.cursor()
       query = "DELETE FROM agendamento WHERE id=?"

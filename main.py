@@ -60,6 +60,8 @@ def tela(nome="Planner Ártemis"):
   tela.title(nome)
   tela.geometry("900x450+610+153")
   tela.resizable(width=False, height=False)
+  logo = PhotoImage(file = 'images/logo.png')
+  tela.iconphoto(False, logo)
   return tela
 
 
@@ -252,31 +254,7 @@ def tela_agendamentos():
   en_descricao = Text(janelaAgenda, bd=2, font=("Calibri", 12))
   en_descricao.place(width=210, height=80, x=20, y=252)
 
-  # Criação dos botões
-  bt_voltar = Button(janelaAgenda,
-                     bd=0,
-                     image=img_botaovoltar,
-                     command=lambda: [janelaAgenda.destroy(),
-                                      tela_inicial()])
-  bt_voltar.place(width=150, height=50, x=760, y=13)
-
-  bt_inserir = Button(janelaAgenda,
-                      bd=0,
-                      image=img_botaoinserir,
-                      command=inserir)
-  bt_inserir.place(width=80, height=25, x=5, y=398)
-
-  bt_atualizar = Button(janelaAgenda,
-                        bd=0,
-                        image=img_botaoatualizar,
-                        command=atualizar)
-  bt_atualizar.place(width=80, height=25, x=100, y=398)
-
-  bt_deletar = Button(janelaAgenda,
-                      bd=0,
-                      image=img_botaodeletar,
-                      command=deletar)
-  bt_deletar.place(width=80, height=25, x=195, y=398)
+  
 
   # Inserir Agendamentos
   def inserir():
@@ -285,7 +263,8 @@ def tela_agendamentos():
     dia = e_cal.get()
     descricao = en_descricao.get(1.0, 'end')
     id = usuario_atual.get_id()
-    lista = [nome, dia, descricao, id]
+    
+    lista = agendamento(nome, dia, descricao, id)
 
     if nome is None:
       messagebox.showerror('Erro', 'O nome não pode ser vazio')
@@ -324,7 +303,7 @@ def tela_agendamentos():
         dia = e_cal.get()
         descricao = en_descricao.get(1.0, 'end')
 
-        lista = [nome, dia, descricao, valor_id]
+        lista = agendamento(nome, dia, descricao, valor_id)
 
         if nome == '':
           messagebox.showerror('Erro', 'O nome não pode ser vazio')
@@ -360,7 +339,7 @@ def tela_agendamentos():
       treev_dicionario = tree.item(treev_dados)
       tree_lista = treev_dicionario['values']
 
-      valor_id = [tree_lista[0]]
+      valor_id = agendamento([tree_lista[0]], None, None, None)
 
       agendamento.deletar_info(valor_id)
       messagebox.showinfo('Sucesso',
@@ -416,7 +395,32 @@ def tela_agendamentos():
       n += 1
     for item in lista:
       tree.insert('', 'end', values=item)
+  
+  # Criação dos botões
+  bt_voltar = Button(janelaAgenda,
+                     bd=0,
+                     image=img_botaovoltar,
+                     command=lambda: [janelaAgenda.destroy(),
+                                      tela_inicial()])
+  bt_voltar.place(width=150, height=50, x=760, y=13)
 
+  bt_inserir = Button(janelaAgenda,
+                      bd=0,
+                      image=img_botaoinserir,
+                      command=inserir)
+  bt_inserir.place(width=80, height=25, x=5, y=398)
+
+  bt_atualizar = Button(janelaAgenda,
+                        bd=0,
+                        image=img_botaoatualizar,
+                        command=atualizar)
+  bt_atualizar.place(width=80, height=25, x=100, y=398)
+
+  bt_deletar = Button(janelaAgenda,
+                      bd=0,
+                      image=img_botaodeletar,
+                      command=deletar)
+  bt_deletar.place(width=80, height=25, x=195, y=398)
   # Chamando a função mostrar
   mostrar()
   janelaAgenda.mainloop()
