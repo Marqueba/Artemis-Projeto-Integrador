@@ -1,19 +1,27 @@
+"""
+Toda logica baseada na ideologia CRUD
+
+C reate ->  Criar   | Inserir
+R ead   ->  Acessar | Visualizar
+U pdate ->  Atualizar
+D elete ->  Deletar | Apagar
+"""
+
 # Importando SQLite
 import sqlite3 as lite
 
-#  CRUD
-# Create = criar/ Inserir
-# Read = Acessar/ Visualizar
-# Update = Atualizar
-# Delete =  Deletar / Apagar
 
 # Criando conexão
 conexao = lite.connect('Bancodedados.db')
 
+
+#importando o messagebox do tkinter
 from tkinter import messagebox
+
 
 # Importando sistema de validação de senha
 import senhaValida
+
 
 # Importando sistema de validação de e-mail
 import emailValido
