@@ -19,7 +19,7 @@ Integrantes:s
 """
 
 
-#importando biblioteca do sistema
+# Importando biblioteca do sistema
 import os
 
 
@@ -44,6 +44,7 @@ from tkinter import messagebox
 from tkcalendar import Calendar
 from tkcalendar import DateEntry
 
+
 # Importando a função de envio de email
 from recuperarSenhaPorEmail import enviar_email
 
@@ -52,6 +53,7 @@ from recuperarSenhaPorEmail import enviar_email
 conexao = lite.connect('Bancodedados.db')
 global usuario_atual
 global tree
+
 
 # Caso o banco de dados não existe ele será criado
 if not os.path.isfile("Bancodedados.db"):
@@ -68,100 +70,127 @@ def tela(nome="Planner Ártemis"):
   return tela
 
 
-# Criando janela
+# Criando janela inicial
 def tela_inicial():
+  # Criando a tela
   janelaInicial = tela()
-  
+
+
+  # Carregando as imagens
   img_telainicial = PhotoImage(file='images/fundos/TelaInicial.png')
   img_botaologin = PhotoImage(file='images/botoes/BotaoLogin.png')
   img_botaocadastro = PhotoImage(file='images/botoes/BotaoCadastro.png')
   img_botaosobre = PhotoImage(file='images/botoes/BotaoSobre.png')
 
+
+  # Criação da/das label/s
   lab_fundo = Label(janelaInicial, image=img_telainicial)
   lab_fundo.pack()
 
+  
   # Criação de botões
   bt_login = Button(janelaInicial, bd=0, image=img_botaologin, command=lambda: [janelaInicial.destroy(), tela_login()])
   bt_login.place(width=150, height=50, x=228, y=322)
 
+  
   bt_cadastro = Button(janelaInicial, bd=0, image=img_botaocadastro, command=lambda: [janelaInicial.destroy(), tela_cadastro()])
   bt_cadastro.place(width=150, height=50, x=522, y=322)
 
+  
   bt_sobre = Button(janelaInicial, bd=0, image=img_botaosobre, command=lambda: [janelaInicial.destroy(), tela_sobre()])
   bt_sobre.place(width=120, height=40, x=760, y=13)
 
+  
   janelaInicial.mainloop()
 
 
 def tela_sobre():
+  # Criando a tela
   janelaSobre = tela('Planner Ártemis - Sobre')
 
+  
+  # Carregando as imagens
   img_telasobre = PhotoImage(file='images/fundos/TelaSobre.png')
   img_botaovoltar = PhotoImage(file='images/botoes/BotaoVoltar.png')
 
+  
+  # Criação da/das label/s
   lab_fundo = Label(janelaSobre, image=img_telasobre)
   lab_fundo.pack()
 
+  
   # Criação dos botões
   bt_voltar = Button(janelaSobre, bd=0, image=img_botaovoltar, command=lambda: [janelaSobre.destroy(), tela_inicial()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
+  
   janelaSobre.mainloop()
 
 
 def tela_login():
+  # Criando a tela
   janelaLogin = tela('Planner Ártemis - Login')
 
+  
+  # Carregando as imagens
   img_telalogin = PhotoImage(file='images/fundos/TelaLogin.png')
   img_botaovoltar = PhotoImage(file='images/botoes/BotaoVoltar.png')
   img_botaoinicia = PhotoImage(file='images/botoes/BotaoIniciarsessao.png')
   img_btesquece = PhotoImage(file='images/botoes/BotaoEsquece.png')
   img_botaocadastro = PhotoImage(file='images/botoes/BotaoRcadastro.png')
+
   
+  # Criação da/das label/s  
   lab_fundo = Label(janelaLogin, image=img_telalogin)
   lab_fundo.pack()
 
+  
   # Configurando entrada de dados
   esconda_senha = StringVar()
-
   en_username = Entry(janelaLogin, bd=2, font=("Calibri", 15), justify=CENTER)
   en_username.place(width=392, height=44, x=253, y=137)
 
+  
   en_senha = Entry(janelaLogin, textvariable=esconda_senha, show='*', bd=2, font=("Calibri", 15), justify=CENTER)
   en_senha.place(width=392, height=44, x=253, y=235)
 
-  ########## Criação dos botões
+  
+  # Criação dos botões
   bt_voltar = Button(janelaLogin, bd=0, image=img_botaovoltar, command=lambda: [janelaLogin.destroy(), tela_inicial()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
+
   
   bt_cadastro = Button(janelaLogin, bd=0, image=img_botaocadastro, command=lambda: [janelaLogin.destroy(), tela_cadastro()])
   bt_cadastro.place(width=130, height=30, x=517, y=298)
 
-  # Botão Iniciar Sessão
+  
   bt_iniciasessao = Button(janelaLogin, bd=0, image=img_botaoinicia, command=lambda: [janelaLogin.destroy(), tela_agendamentos()] if login_valido(en_username.get(), en_senha.get()) else [messagebox.showerror(title='ERRO', message='Usuário e/ou senha errados'), en_username.delete(0, 'end'),en_senha.delete(0, 'end')])
-
   bt_iniciasessao.place(width=150, height=50, x=698, y=365)
 
-  # Botão Esqueceu senha?
+  
   bt_esquecesenha = Button(janelaLogin, bd=0, image=img_btesquece, command=lambda: [janelaLogin.destroy(), tela_ajuda()])
   bt_esquecesenha.place(width=130, height=30, x=252, y=298)
 
+  
   janelaLogin.mainloop()
 
 
 def tela_cadastro():
+  # Criando a tela
   janelaCadastro = tela('Planner Ártemis - Cadastro')
 
+  
+  # Carregando as imagens
   img_telacadastro = PhotoImage(file='images/fundos/Telacadastro.png')
   img_botaovoltar = PhotoImage(file='images/botoes/BotaoVoltar.png')
   img_botaoconcluir = PhotoImage(file='images/botoes/BotaoConcluir.png')
-  
 
+  # Criação da/das label/s  
   lab_fundo = Label(janelaCadastro, image=img_telacadastro)
   lab_fundo.pack()
 
+  
   # Configurando entrada de dados
-
   en_username = Entry(janelaCadastro, bd=2, font=("Calibri", 15), justify=CENTER)
   en_username.place(width=392, height=44, x=253, y=137)
 
@@ -171,32 +200,40 @@ def tela_cadastro():
   en_local = Entry(janelaCadastro, bd=2, font=("Calibri", 15), justify=CENTER)
   en_local.place(width=392, height=44, x=253, y=333)
 
+  # Logica para logar usuario
   def logar_usuario(nome,senha,backup):
     global usuario_atual
     usuario_atual = usuario(nome, senha, backup)
 
-  ########## Criação dos botões
+    
+  # Criação dos botões
   bt_voltar = Button(janelaCadastro, bd=0, image=img_botaovoltar, command=lambda: [janelaCadastro.destroy(), tela_inicial()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
-  
 
-  ########## Criação dos botões
+  
   bt_concluir = Button( janelaCadastro, bd=0, image=img_botaoconcluir, command=lambda: [logar_usuario(en_username.get(), en_senha.get(), en_local.get()),janelaCadastro.destroy(), tela_agendamentos()] if usuario.cadastro_user(en_username.get(), en_senha.get(), en_local.get()) else [])
   bt_concluir.place(width=150, height=50, x=698, y=365)
 
+  
   janelaCadastro.mainloop()
 
 
 def tela_ajuda():
+  # Criando a tela
   janelaAjuda = tela('Planner Ártemis - Ajuda')
 
+  
+  # Carregando as imagens
   img_telaajuda = PhotoImage(file='images/fundos/TelaAjuda.png')
   img_botaovoltar = PhotoImage(file='images/botoes/BotaoVoltar.png')
   img_botaorecupera = PhotoImage(file='images/botoes/BotaoRecuperarsenha.png')
 
+  
+  # Criação da/das label/s  
   lab_fundo = Label(janelaAjuda, image=img_telaajuda)
   lab_fundo.pack()
 
+  
   # Configurando entrada de dados
   en_username = Entry(janelaAjuda, bd=2, font=("Calibri", 15), justify=CENTER)
   en_username.place(width=392, height=44, x=253, y=137)
@@ -208,7 +245,7 @@ def tela_ajuda():
   bt_voltar = Button(janelaAjuda, bd=0, image=img_botaovoltar, command=lambda: [janelaAjuda.destroy(), tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
-  bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'Sua senha foi recuperada! Olhe seu email'), enviar_email(en_local.get()) ] if local_valido(en_username.get(), en_local.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
+  bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'Sua senha foi recuperada! Olhe seu email'), enviar_email(en_local.get(), en_username.get(), usuario.get_senha(en_username.get())) ] if local_valido(en_username.get(), en_local.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
   bt_recuperar.place(width=200, height=50, x=350, y=341)
 
   def local_valido(username, backup):

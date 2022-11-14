@@ -2,9 +2,7 @@
 import smtplib
 import email.message
 
-def enviar_email(email_user):  
-    nome = ''
-    senha = ''
+def enviar_email(email_user, nome, senha):  
     
     corpo_email = """ <p>Olá {}!!!</p> 
                       <p>Sua senha é {}</p>""".format(nome, senha)
@@ -22,7 +20,6 @@ def enviar_email(email_user):
     # Login Credentials for sending the mail
     s.login(msg['From'], password)
     s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
-    print('Email enviado')
 
 
 # In[ ]:
