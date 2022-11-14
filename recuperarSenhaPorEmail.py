@@ -6,10 +6,14 @@ import email.message
 import random
 import string
 
-def enviar_email(email_user, nome, senha):  
-    
+def enviar_email(email_user, nome):  
+    global code
+    size=5
+    chars=string.ascii_uppercase + string.digits
+    code = ''.join(random.choice(chars) for _ in range(size))
+
     corpo_email = """ <p>Olá {}!!!</p> 
-                      <p>Sua senha é {}</p>""".format(nome, senha)
+                      <p>Seu código de verificação é {}</p>""".format(nome, code)
 
     msg = email.message.Message()
     msg['Subject'] = "Recuperação de Senha"
@@ -24,12 +28,5 @@ def enviar_email(email_user, nome, senha):
     # Login Credentials for sending the mail
     s.login(msg['From'], password)
     s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
-
-def gerar_codigo():
-  global code
-  size=5
-  chars=string.ascii_uppercase + string.digits
-  code = ''.join(random.choice(chars) for _ in range(size))
-  return code
 
 # In[ ]:

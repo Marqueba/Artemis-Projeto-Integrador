@@ -237,14 +237,14 @@ def tela_ajuda():
   en_username = Entry(janelaAjuda, bd=2, font=("Calibri", 15), justify=CENTER)
   en_username.place(width=392, height=44, x=253, y=137)
 
-  en_local = Entry(janelaAjuda, bd=2, font=("Calibri", 15), justify=CENTER)
-  en_local.place(width=392, height=44, x=253, y=235)
+  en_email = Entry(janelaAjuda, bd=2, font=("Calibri", 15), justify=CENTER)
+  en_email.place(width=392, height=44, x=253, y=235)
 
   # Criação dos botões
   bt_voltar = Button(janelaAjuda, bd=0, image=img_botaovoltar, command=lambda: [janelaAjuda.destroy(), tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
-  bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'Um código foi enviado! Olhe seu email'), enviar_email(en_local.get(), en_username.get(), usuario.get_senha(en_username.get())), janelaAjuda.destroy(), tela_alterarsenha() ] if email_valido(en_username.get(), en_local.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
+  bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'Um código foi enviado! Olhe seu email'), enviar_email(en_email.get(), en_username.get()), janelaAjuda.destroy(), tela_alterarsenha() ] if email_valido(en_username.get(), en_email.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
   bt_recuperar.place(width=200, height=50, x=350, y=341)
 
 
@@ -268,6 +268,7 @@ def tela_alterarsenha():
   janelaAltera = tela('Planner Ártemis - Alterar Senha')
 
   img_telaaltera = PhotoImage(file='images/fundos/TelaAlterarSenha1.png')
+  img_telaaltera2 = PhotoImage(file='images/fundos/TelaAlterarSenha2.png')
   img_botaovoltar = PhotoImage(file='images/botoes/BotaoVoltar.png')
   img_botaoverificar = PhotoImage(file='images/botoes/BotaoVerificarCodigo.png')
   img_botaoredefinir = PhotoImage(file='images/botoes/BotaoRedefinirSenha.png')
@@ -275,6 +276,7 @@ def tela_alterarsenha():
 
   lab_fundo = Label(janelaAltera, image= img_telaaltera)
   lab_fundo.pack()
+  lab_fundo2 = Label(janelaAltera, image=img_telaaltera2)
 
   # Configurando entrada de dados
   en_code = Entry(janelaAltera, bd=2, font=("Calibri", 15), justify=CENTER)
@@ -283,7 +285,9 @@ def tela_alterarsenha():
   bt_voltar = Button(janelaAltera, bd=0, image=img_botaovoltar, command=lambda: [janelaAltera.destroy(), tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
-  bt_verificar = Button(janelaAltera, bd=0, image=img_botaoverificar)
+  bt_redefinirsenha = Button(janelaAltera, bd=0, image = img_botaoredefinir)
+
+  bt_verificar = Button(janelaAltera, bd=0, image=img_botaoverificar, command=lambda: [lab_fundo.destroy(), lab_fundo2.pack(), bt_verificar.destroy(), bt_redefinirsenha.place(width=200, height=50, x=360, y=355) ])
   bt_verificar.place(width=200, height=50, x=360, y=355)
 
   janelaAltera.mainloop()

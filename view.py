@@ -16,6 +16,11 @@ from tkinter import messagebox
 # Importando sistema de validação de senha
 import senhaValida
 
+
+# Importando sistema de validação de e-mail
+import emailValido
+
+
 def acessar_bd(atributos, tabela, chave, chave2):
   with conexao:
     cur = conexao.cursor()
@@ -54,8 +59,8 @@ class usuario:
     user = acessar_bd('nome', 'usuario', 'nome', username)
     return False if user else True
 
-  def cadastro_user(nome, senha, backup):
-    if nome and senha and backup:
+  def cadastro_user(nome, senha, email):
+    if nome and senha and email:
       if not (5 < len(nome) < 20):
         messagebox.showwarning(
           title='ATENÇÃO!',
@@ -68,15 +73,11 @@ class usuario:
         return False
       elif not senhaValida.senhaForte(senha):
         return False
-      elif not True:
-        messagebox.showwarning(
-          title='ATENÇÃO!',
-          message=
-          'Email invalido ')
+      elif not emailValido.verificarEmail(email):
         return False
       else:
         with conexao:
-          i = [nome, senha, backup]
+          i = [nome, senha, email]
           cur = conexao.cursor()
           query = "INSERT INTO usuario (nome, senha, backup) VALUES (?, ?, ?)"
           cur.execute(query, i)
