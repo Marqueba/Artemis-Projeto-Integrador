@@ -44,6 +44,8 @@ from tkinter import messagebox
 from tkcalendar import Calendar
 from tkcalendar import DateEntry
 
+# Importando a função de envio de email
+from recuperarSenhaPorEmail import enviar_email
 
 
 # Declaração de variaveis globais
@@ -206,7 +208,7 @@ def tela_ajuda():
   bt_voltar = Button(janelaAjuda, bd=0, image=img_botaovoltar, command=lambda: [janelaAjuda.destroy(), tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
-  bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'A sua senha é: {usuario.get_senha(en_username.get())}') ] if local_valido(en_username.get(), en_local.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
+  bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'Sua senha foi recuperada! Olhe seu email'), enviar_email(en_local.get()) ] if local_valido(en_username.get(), en_local.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
   bt_recuperar.place(width=200, height=50, x=350, y=341)
 
   def local_valido(username, backup):
@@ -334,14 +336,15 @@ def tela_agendamentos():
 
   # Função Atualizar
   def deletar():
+    global agendamentos
     try:
       treev_dados = tree.focus()
       treev_dicionario = tree.item(treev_dados)
       tree_lista = treev_dicionario['values']
-
-      valor_id = agendamento([tree_lista[0]], None, None, None)
-
-      agendamento.deletar_info(valor_id)
+      
+      indice = tree_lista[0]-1
+      
+      agendamentos[indice].deletar_info()
       messagebox.showinfo('Sucesso',
                           'Os dados foram deletados da tabela com sucesso')
 
@@ -360,9 +363,8 @@ def tela_agendamentos():
     global tree
     global usuario_atual
     id = usuario_atual.get_id()
-    print(id)
     lista = agendamento.mostrar_info(id)
-    
+    global agendamentos
     agendamentos = []
     for value in lista:
       agendamentos.append(
@@ -404,8 +406,8 @@ def tela_agendamentos():
       tree.column(col, width=h[n], anchor=hd[n])
 
       n += 1
-    for i,item in enumerate(agendamentos):
-      tree.insert('', 'end', values=[i,item.get_nome(),item.get_data(),item.get_des])
+    for i,item in enumerate(agendamentos, start = 1):
+      tree.insert('', 'end', values=[i,item.get_nome(),item.get_data(),item.get_des()])
   
   # Criação dos botões
   bt_voltar = Button(janelaAgenda,

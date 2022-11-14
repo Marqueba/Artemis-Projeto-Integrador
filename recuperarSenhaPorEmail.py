@@ -26,6 +26,3 @@ def enviar_email(email_user):
 
 
 # In[ ]:
-
-
-enviar_email()

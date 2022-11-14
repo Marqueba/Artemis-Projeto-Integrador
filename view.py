@@ -100,6 +100,10 @@ class agendamento:
   def set_id(self, id):
     self.__id = id
 
+
+  def get_id(self):
+    return self.__id
+
     
   def get_nome(self):
     return self.__nome 
@@ -138,7 +142,7 @@ class agendamento:
 
   # Deletar Informações
   def deletar_info(self):
-    i = self.__nome
+    i = str(self.__id)
     with conexao:
       cur = conexao.cursor()
       query = "DELETE FROM agendamento WHERE id=?"
