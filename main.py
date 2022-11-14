@@ -47,7 +47,6 @@ from tkcalendar import DateEntry
 # Importando a função de envio de email
 from recuperarSenhaPorEmail import enviar_email
 
-
 # Declaração de variaveis globais
 conexao = lite.connect('Bancodedados.db')
 global usuario_atual
@@ -244,7 +243,20 @@ def tela_ajuda():
   bt_voltar = Button(janelaAjuda, bd=0, image=img_botaovoltar, command=lambda: [janelaAjuda.destroy(), tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
-  bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'Um código foi enviado! Olhe seu email'), enviar_email(en_email.get(), en_username.get()), janelaAjuda.destroy(), tela_alterarsenha() ] if email_valido(en_username.get(), en_email.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
+  bt_recuperar = Button(janelaAjuda, 
+                        bd=0, 
+                        image=img_botaorecupera, 
+                        command=lambda: 
+                        [ 
+                          messagebox.showinfo( title="SUCESSO", message=f'Um código foi enviado! Olhe seu email'),
+                          enviar_email(en_email.get(),en_username.get()),
+                          janelaAjuda.destroy(),
+                          tela_alterarsenha()
+                        ] 
+                        if email_valido(en_username.get(), en_email.get()) else 
+                        [
+                          messagebox.showerror(title='ERRO', message='A resposta está errada!')
+                        ])
   bt_recuperar.place(width=200, height=50, x=350, y=341)
 
 
@@ -282,12 +294,22 @@ def tela_alterarsenha():
   en_code = Entry(janelaAltera, bd=2, font=("Calibri", 15), justify=CENTER)
   en_code.place(width=392, height=44, x=252, y=210)
 
+  def verificaCodigo():
+    global code
+    if en_code.get() == code:
+      lab_fundo.destroy()
+      lab_fundo2.pack()
+      bt_verificar.destroy()
+      bt_redefinirsenha.place(width=200, height=50, x=360, y=355)
+    else: 
+      messagebox.showerror(title='ERRO', message = 'O código está Incorreto!')
+      
   bt_voltar = Button(janelaAltera, bd=0, image=img_botaovoltar, command=lambda: [janelaAltera.destroy(), tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
   bt_redefinirsenha = Button(janelaAltera, bd=0, image = img_botaoredefinir)
 
-  bt_verificar = Button(janelaAltera, bd=0, image=img_botaoverificar, command=lambda: [lab_fundo.destroy(), lab_fundo2.pack(), bt_verificar.destroy(), bt_redefinirsenha.place(width=200, height=50, x=360, y=355) ])
+  bt_verificar = Button(janelaAltera, bd=0, image=img_botaoverificar, command=verificaCodigo())
   bt_verificar.place(width=200, height=50, x=360, y=355)
 
   janelaAltera.mainloop()

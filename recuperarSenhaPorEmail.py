@@ -40,6 +40,7 @@ def enviar_email(email_user:str, nome:str) -> bool:
       # Login Credentials for sending the mail
       s.login(msg['From'], password)
       s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+      return code
       
 def check_internet():
     ''' checar conexão de internet '''
