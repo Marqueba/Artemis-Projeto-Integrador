@@ -9,7 +9,7 @@ de Sistemas, Linguagem de Programação e Programação Orientada a Objetos. O o
 deste projeto é desenvolver as habilidades trabalhadas em cada uma dessas disciplinas 
 criando um planner que auxilie na organização de discentes e docentes.
 
-Integrantes:
+Integrantes:s
 
 - Marcos Reis Dutra
 - João Pedro Monteiro Ferreira
@@ -365,7 +365,7 @@ def tela_agendamentos():
     # for i,value in enumerate(lista):
     #   agendamentos.append(agendamento(lista[0], lista[1], lista[2], lista[3], lista[4]))
     # Lista para cabeçario
-    tabela_header = ['Nº', 'Nome', 'Data', 'Descrição']
+    tabela_header = ['', 'Nome', 'Data', 'Descrição']
 
     # Criando a Tabela
     tree = ttk.Treeview(direita,
@@ -384,7 +384,7 @@ def tela_agendamentos():
     direita.grid_rowconfigure(0, weight=12)
 
     hd = ['nw', 'nw', 'center', 'nw']
-    h = [30, 140, 120, 280]
+    h = [2, 140, 120, 280]
     n = 0
 
     for col in tabela_header:

@@ -14,10 +14,6 @@ class excecaoTamanhoNome(Exception):
   pass
 
 
-class excecaoTamanhoSenha(Exception):
-  pass
-
-
 class excecaoNenhumAgendamentoSelecionado(Exception):
   pass
 

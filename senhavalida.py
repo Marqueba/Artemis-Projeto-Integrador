@@ -1,4 +1,9 @@
 import re
+import string
+
+
+class TamanhoSenhaError(Exception):
+  pass
 
 
 class naoContemCaractereMaiusculoError(Exception):
@@ -33,7 +38,7 @@ def senhaForte(senha:str):
       return True
     return False
   def contemCaractereEspecial(senha:str) -> bool:
-    l = "!@#$%¨&*()_-=+´`{[}]~^<>,.;:?/\"\'\\"
+    l = string.punctuation
     for x in senha:
       if x in l:
         return True
@@ -43,7 +48,9 @@ def senhaForte(senha:str):
       return True
     return False
   try:
-    if not contemCaractereMaiusculo(senha):
+    if not (8 <= len(senha) <= 20):
+      raise TamanhoSenhaError
+    elif not contemCaractereMaiusculo(senha):
       raise naoContemCaractereMaiusculoError
     elif not contemCaractereMinusculo(senha):
       raise naoContemCaractereMinusculoError
@@ -53,6 +60,9 @@ def senhaForte(senha:str):
       raise naoContemNumeroError
     else:
       return True
+  except TamanhoSenhaError:
+    #print("TamanhoSenhaError")
+    return False
   except naoContemCaractereMaiusculoError:
     #print("naoContemCaractereMaiusculoError")
     return False
@@ -66,6 +76,6 @@ def senhaForte(senha:str):
     #print("naoContemNumeroError")
     return False
 
-testes = ["teste","Teste","Teste1","Teste1!"]
-for x in testes:
-  print( x, "é", " uma senha valida" if senhaForte(x) else " uma senha invalida")
+testes = ["A1!aaaa","A1!aaaaa","A1!aaaaaaaaaaaaaaaaa","A1!aaaaaaaaaaaaaaaaaa"]
+for teste in testes:
+  print(f"{len(teste):>5}",teste,"é uma senha valida" if senhaForte(teste) else "não é uma senha valida" )
