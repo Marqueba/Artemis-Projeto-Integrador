@@ -1,28 +1,28 @@
-class UsuarioSenhaVazio(Exception):
+class UsuarioSenhaVazioError(Exception):
   pass
 
 
-class excecaoLocalNascimentoErrado(Exception):
+class LocalNascimentoErradoError(Exception):
   pass
 
 
-class excecaoNomeIndisponivel(Exception):
+class NomeIndisponivelError(Exception):
   pass
 
 
-class excecaoTamanhoNome(Exception):
+class TamanhoNomeError(Exception):
   pass
 
 
-class excecaoNenhumAgendamentoSelecionado(Exception):
+class NenhumAgendamentoSelecionadoError(Exception):
   pass
 
 
-class excecaoNomeAgendamentoVazio(Exception):
+class NomeAgendamentoVazioError(Exception):
   pass
 
 
-class excecaoDataAgendamentoVazia(Exception):
+class DataAgendamentoVaziaError(Exception):
   pass
 
 
