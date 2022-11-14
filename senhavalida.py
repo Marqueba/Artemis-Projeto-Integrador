@@ -1,6 +1,6 @@
 import re
 import string
-
+from tkinter import messagebox
 
 class TamanhoSenhaError(Exception):
   pass
