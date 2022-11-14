@@ -3,7 +3,6 @@ import re
 
 
 teste1 = re.compile(r'^[a-z0-9_.]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$')
-
 teste2 = '^[a-z0-9]+[.]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
    
 

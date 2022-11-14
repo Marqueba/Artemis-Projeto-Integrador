@@ -11,7 +11,8 @@ with conexao:
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 "nome TEXT,"
                 "senha TEXT,"
-                "backup TEXT)")
+                "email TEXT,"
+                "adm INTEGER DEFAULT 0)")
 
 # Criando tabela Agendamento
 with conexao:
