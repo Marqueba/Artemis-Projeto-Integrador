@@ -37,10 +37,10 @@ class usuario:
     if senha_user:
       return senha_user[0][0]
 
-  def get_local(username):
-    backup_local = acessar_bd('backup', 'usuario', 'nome', username)
-    if backup_local:
-      return backup_local[0][0]
+  def get_email(username):
+    backup_email = acessar_bd('backup', 'usuario', 'nome', username)
+    if backup_email:
+      return backup_email[0][0]
 
   def get_usuario(username):
     user = acessar_bd('*', 'usuario', 'nome', username)
@@ -68,11 +68,11 @@ class usuario:
         return False
       elif not senhaValida.senhaForte(senha):
         return False
-      elif not (5 < len(backup) < 20):
+      elif not True:
         messagebox.showwarning(
           title='ATENÇÃO!',
           message=
-          'Tamanho mínimo do local é 5 caracteres e máximo de 20 caracteres')
+          'Email invalido ')
         return False
       else:
         with conexao:

@@ -44,7 +44,6 @@ from tkinter import messagebox
 from tkcalendar import Calendar
 from tkcalendar import DateEntry
 
-
 # Importando a função de envio de email
 from recuperarSenhaPorEmail import enviar_email
 
@@ -226,7 +225,7 @@ def tela_ajuda():
   # Carregando as imagens
   img_telaajuda = PhotoImage(file='images/fundos/TelaAjuda.png')
   img_botaovoltar = PhotoImage(file='images/botoes/BotaoVoltar.png')
-  img_botaorecupera = PhotoImage(file='images/botoes/BotaoRecuperarsenha.png')
+  img_botaorecupera = PhotoImage(file='images/botoes/BotaoEnviarCodigo.png')
 
   
   # Criação da/das label/s  
@@ -245,13 +244,15 @@ def tela_ajuda():
   bt_voltar = Button(janelaAjuda, bd=0, image=img_botaovoltar, command=lambda: [janelaAjuda.destroy(), tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
-  bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'Sua senha foi recuperada! Olhe seu email'), enviar_email(en_local.get(), en_username.get(), usuario.get_senha(en_username.get())) ] if local_valido(en_username.get(), en_local.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
+  bt_recuperar = Button(janelaAjuda, bd=0, image=img_botaorecupera, command=lambda: [ messagebox.showinfo( title="SUCESSO", message=f'Um código foi enviado! Olhe seu email'), enviar_email(en_local.get(), en_username.get(), usuario.get_senha(en_username.get())), janelaAjuda.destroy(), tela_alterarsenha() ] if email_valido(en_username.get(), en_local.get()) else [messagebox.showerror(title='ERRO', message='A resposta está errada!')])
   bt_recuperar.place(width=200, height=50, x=350, y=341)
 
-  def local_valido(username, backup):
+
+  # Logica de validação de email
+  def email_valido(username, backup):
     global usuario_atual
     if username and backup:
-      if usuario.get_local(username) != backup:
+      if usuario.get_email(username) != backup:
         return False
       else:
         user = usuario.get_usuario(username)
@@ -260,12 +261,39 @@ def tela_ajuda():
     else:
       return False
 
+  
   janelaAjuda.mainloop()
 
+def tela_alterarsenha():
+  janelaAltera = tela('Planner Ártemis - Alterar Senha')
+
+  img_telaaltera = PhotoImage(file='images/fundos/TelaAlterarSenha1.png')
+  img_botaovoltar = PhotoImage(file='images/botoes/BotaoVoltar.png')
+  img_botaoverificar = PhotoImage(file='images/botoes/BotaoVerificarCodigo.png')
+  img_botaoredefinir = PhotoImage(file='images/botoes/BotaoRedefinirSenha.png')
+
+
+  lab_fundo = Label(janelaAltera, image= img_telaaltera)
+  lab_fundo.pack()
+
+  # Configurando entrada de dados
+  en_code = Entry(janelaAltera, bd=2, font=("Calibri", 15), justify=CENTER)
+  en_code.place(width=392, height=44, x=252, y=210)
+
+  bt_voltar = Button(janelaAltera, bd=0, image=img_botaovoltar, command=lambda: [janelaAltera.destroy(), tela_login()])
+  bt_voltar.place(width=150, height=50, x=62, y=365)
+
+  bt_verificar = Button(janelaAltera, bd=0, image=img_botaoverificar)
+  bt_verificar.place(width=200, height=50, x=360, y=355)
+
+  janelaAltera.mainloop()
 
 def tela_agendamentos():
+  # Criando a tela
   janelaAgenda = tela('Planner Ártemis - Agendamentos')
 
+
+  # Carregando as imagens
   img_cima = PhotoImage(file='images/fundos/cima.png')
   img_lado = PhotoImage(file='images/fundos/lado.png')
   img_botaovoltar = PhotoImage(file='images/botoes/BotaoVoltar.png')
@@ -274,15 +302,20 @@ def tela_agendamentos():
   img_botaodeletar = PhotoImage(file='images/botoes/BotaoDeletar.png')
   img_botaoconfirma = PhotoImage(file='images/botoes/BotaoConfirmar.png')
 
+
+  # Criação da/das label/s  
   lab_cima = Label(janelaAgenda, image=img_cima)
   lab_cima.pack()
   lab_lado = Label(janelaAgenda, image=img_lado)
   lab_lado.pack(side=LEFT)
 
+  
   # Configurando o Frame que em ocorrerá a visualização da tabela
   branco = '#000000'
   direita = Frame(janelaAgenda, width=577, height=500, bd=1, bg=branco, relief="raise")
   direita.pack(padx=1, pady=0)
+
+  
   # Configurando entrada de dados
   en_nome = Entry(janelaAgenda, bd=2, font=("Calibri", 12), justify=CENTER)
   en_nome.place(width=210, height=30, x=20, y=123)
@@ -293,9 +326,8 @@ def tela_agendamentos():
   en_descricao = Text(janelaAgenda, bd=2, font=("Calibri", 12))
   en_descricao.place(width=210, height=80, x=20, y=252)
 
-  
 
-  # Inserir Agendamentos
+  # Logica para inserir Agendamentos
   def inserir():
     global usuario_atual
     nome = en_nome.get()
@@ -319,8 +351,8 @@ def tela_agendamentos():
 
     mostrar()
 
-# Atualizar agendamentos
-
+    
+  # Logica para atualizar agendamentos
   def atualizar():
     try:
       treev_dados = tree.focus()
@@ -371,7 +403,7 @@ def tela_agendamentos():
     except IndexError:
       messagebox.showerror('Erro', 'Seleciona um dos dados na tabela')
 
-  # Função Atualizar
+  # Logica para deletar agendamentos
   def deletar():
     global agendamentos
     try:
@@ -394,8 +426,7 @@ def tela_agendamentos():
       messagebox.showerror('Erro', 'Seleciona um dos dados na tabela')
 
 
-#################################
-
+  # Logica para mostrar agendamentos
   def mostrar():
     global tree
     global usuario_atual
@@ -476,6 +507,7 @@ def tela_agendamentos():
   janelaAgenda.mainloop()
 
 
+# Logica para validar login
 def login_valido(username, senha):
   global usuario_atual
   if username and senha:
@@ -489,18 +521,24 @@ def login_valido(username, senha):
     return False
 
     
-debug:bool or int = 0 
+debug:bool or int = 1 
 if debug:
+  # with conexao:
+  #   i = ["adm", "adm", "adm"]
+  #   cur = conexao.cursor()
+  #   query = "INSERT INTO usuario (nome, senha, backup) VALUES (?, ?, ?)"
+  #   cur.execute(query, i)
   with conexao:
-            i = ["adm", "adm", "adm"]
-            cur = conexao.cursor()
-            query = "INSERT INTO usuario (nome, senha, backup) VALUES (?, ?, ?)"
-            cur.execute(query, i)
+    cur = conexao.cursor()
+    query = f"SELECT * FROM usuario"
+    cur.execute(query)
+    lista = cur.fetchall()
+  print(*lista,sep="\n")
   with conexao:
-      cur = conexao.cursor()
-      query = f"SELECT * FROM usuario"
-      cur.execute(query)
-      lista = cur.fetchall()
-  print(lista)
+    cur = conexao.cursor()
+    query = f"SELECT * FROM agendamento"
+    cur.execute(query)
+    lista = cur.fetchall()
+  print(*lista,sep="\n")
 
 tela_inicial()

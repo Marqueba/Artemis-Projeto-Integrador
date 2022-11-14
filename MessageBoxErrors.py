@@ -57,6 +57,11 @@ messagebox.showerror(title='ATENÇÃO!', message='Senha fraca - deve conter pelo
 messagebox.showerror(title='ATENÇÃO!', message='Senha fraca - deve conter pelo menos um número')
 
 
+#cadastro - erros de email
+messagebox.showerror(title='ATENÇÃO!', message='Email invalido.')
+
+
+
 #agendamento
 messagebox.showerror(title='ERRO', message='Nenhum agendamento selecionado!')
 messagebox.showerror(title='ERRO',message='O nome do agendamento não pode ser vazio!')
