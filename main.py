@@ -18,7 +18,6 @@ Integrantes:s
 
 """
 
-
 # Importando biblioteca do sistema
 import os
 
@@ -29,10 +28,9 @@ import banco
 # Importando as classes a serem utilizadas
 from view import usuario, agendamento
 
-
 # Importando o sqlite3
 import sqlite3 as lite
-
+import senhaValida
 
 # Importando o Tkinter
 from tkinter import *
@@ -52,6 +50,12 @@ conexao = lite.connect('Bancodedados.db')
 global usuario_atual
 global codigo
 global tree
+
+class NomeVazioError(Exception):
+  pass
+
+class CodigoError(Exception):
+  pass
 
 
 # Caso o banco de dados não existe ele será criado
@@ -163,7 +167,15 @@ def tela_login():
   bt_cadastro.place(width=130, height=30, x=517, y=298)
 
   
-  bt_iniciasessao = Button(janelaLogin, bd=0, image=img_botaoinicia, command=lambda: [janelaLogin.destroy(), tela_agendamentos()] if login_valido(en_username.get(), en_senha.get()) else [messagebox.showerror(title='ERRO', message='Usuário e/ou senha errados'), en_username.delete(0, 'end'),en_senha.delete(0, 'end')])
+  bt_iniciasessao = Button(janelaLogin, 
+                           bd=0, 
+                           image=img_botaoinicia, 
+                           command=lambda: [janelaLogin.destroy(),
+                                            tela_agendamentos()] 
+                           if login_valido(en_username.get(), en_senha.get()) else
+                           [messagebox.showerror('ERRO','Usuário e/ou senha errados'),
+                            en_username.delete(0, 'end'),
+                            en_senha.delete(0, 'end')])
   bt_iniciasessao.place(width=150, height=50, x=698, y=365)
 
   
@@ -302,11 +314,15 @@ def tela_enviarcodigo():
     print("verifica codigo")
     codi = en_code.get()
     codi = codi.upper()
-    if codi == codigo:
+    try:
+      if codi != codigo:
+        raise CodigoError
+    except CodigoError: 
+      messagebox.showerror('Erro', 'O código está Incorreto!')
+    else:
       janelaEnviocodigo.destroy()
       tela_alterarsenha()
-    else: 
-      messagebox.showerror(title='ERRO', message = 'O código está Incorreto!')
+       
       
   bt_voltar = Button(janelaEnviocodigo, 
                      bd=0, 
@@ -314,7 +330,7 @@ def tela_enviarcodigo():
                      command=lambda: [janelaEnviocodigo.destroy(),tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
-  bt_verificar = Button(janelaEnviocodigo, bd=0, image=img_botaoverificar, command=lambda: [verificaCodigo(), print("AUAUUAUAUAUAUAUUA")])
+  bt_verificar = Button(janelaEnviocodigo, bd=0, textvariable = StringVar(), show='*',image=img_botaoverificar, command=lambda: [verificaCodigo()])
   bt_verificar.place(width=200, height=50, x=360, y=355)
 
   janelaEnviocodigo.mainloop()
@@ -332,7 +348,14 @@ def tela_alterarsenha():
   en_novasenha.place(width=392, height=44, x=252, y=210)
 
   id = usuario_atual.get_id()
-  bt_redefinirsenha = Button(janelaAltera, bd=0, image = img_botaoredefinir, command=lambda: [usuario.alterar_senha(en_novasenha.get(), id), messagebox.showinfo(title='SUCESSO', message='Senha Alterada com sucesso!'), janelaAltera.destroy(), tela_login()])
+  bt_redefinirsenha = Button(janelaAltera, 
+                             bd=0, 
+                             image = img_botaoredefinir, 
+                             command=lambda: [usuario.alterar_senha(en_novasenha.get(), id),
+                                              messagebox.showinfo(title='SUCESSO', message='Senha Alterada com sucesso!'),
+                                              janelaAltera.destroy(),
+                                              tela_login()] if senhaValida.senhaForte(en.novasenha.get()) else []
+                            )
   bt_redefinirsenha.place(width=200, height=50, x=360, y=355)  
 
   janelaAltera.mainloop()
@@ -384,8 +407,10 @@ def tela_agendamentos():
     id = usuario_atual.get_id()
     
     lista = agendamento(None, nome, dia, descricao, id)
-
-    if nome is None:
+    try:
+      if nome == '':
+        raise NomeVazioError  
+    except NomeVazioError:
       messagebox.showerror('Erro', 'O nome não pode ser vazio')
     else:
       agendamento.inserir_info(lista)
@@ -423,8 +448,10 @@ def tela_agendamentos():
         descricao = en_descricao.get(1.0, 'end')
 
         lista = agendamento(nome, dia, descricao, valor_id)
-
-        if nome == '':
+        try:
+          if nome == '':
+            raise NomeVazioError  
+        except NomeVazioError:
           messagebox.showerror('Erro', 'O nome não pode ser vazio')
         else:
           agendamento.atualizar_info(lista)
