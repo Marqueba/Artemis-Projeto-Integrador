@@ -50,6 +50,7 @@ from recuperarSenhaPorEmail import enviar_email
 # Declaração de variaveis globais
 conexao = lite.connect('Bancodedados.db')
 global usuario_atual
+global codigo
 global tree
 
 
@@ -249,14 +250,14 @@ def tela_ajuda():
                         command=lambda: 
                         [ 
                           messagebox.showinfo( title="SUCESSO", message=f'Um código foi enviado! Olhe seu email'),
-                          enviar_email(en_email.get(),en_username.get()),
+                          salvarCodigo(enviar_email(en_email.get(),en_username.get())),
                           janelaAjuda.destroy(),
-                          tela_alterarsenha()
+                          tela_enviarcodigo(),
                         ] 
                         if email_valido(en_username.get(), en_email.get()) else 
                         [
                           messagebox.showerror(title='ERRO', message='A resposta está errada!')
-                        ])
+                        ],)
   bt_recuperar.place(width=200, height=50, x=350, y=341)
 
 
@@ -276,48 +277,69 @@ def tela_ajuda():
   
   janelaAjuda.mainloop()
 
-def tela_alterarsenha():
-  janelaAltera = tela('Planner Ártemis - Alterar Senha')
+def salvarCodigo(codigo_temp: bool or str) -> None:
+  global codigo
+  if not codigo_temp:
+    janelaAjuda.destroy()
+    tela_ajuda()
+  codigo = codigo_temp
 
+def tela_enviarcodigo():
+  global codigo
+  janelaEnviocodigo = tela('Planner Ártemis - Código de verificação')
   img_telaaltera = PhotoImage(file='images/fundos/TelaAlterarSenha1.png')
-  img_telaaltera2 = PhotoImage(file='images/fundos/TelaAlterarSenha2.png')
   img_botaovoltar = PhotoImage(file='images/botoes/BotaoVoltar.png')
   img_botaoverificar = PhotoImage(file='images/botoes/BotaoVerificarCodigo.png')
-  img_botaoredefinir = PhotoImage(file='images/botoes/BotaoRedefinirSenha.png')
 
-
-  lab_fundo = Label(janelaAltera, image= img_telaaltera)
+  lab_fundo = Label(janelaEnviocodigo, image= img_telaaltera)
   lab_fundo.pack()
-  lab_fundo2 = Label(janelaAltera, image=img_telaaltera2)
 
   # Configurando entrada de dados
-  en_code = Entry(janelaAltera, bd=2, font=("Calibri", 15), justify=CENTER)
+  en_code = Entry(janelaEnviocodigo, bd=2, font=("Calibri", 15), justify=CENTER)
   en_code.place(width=392, height=44, x=252, y=210)
 
   def verificaCodigo():
-    global code
-    if en_code.get() == code:
-      lab_fundo.destroy()
-      lab_fundo2.pack()
-      bt_verificar.destroy()
-      bt_redefinirsenha.place(width=200, height=50, x=360, y=355)
+    print("verifica codigo")
+    codi = en_code.get()
+    codi = codi.upper()
+    if codi == codigo:
+      janelaEnviocodigo.destroy()
+      tela_alterarsenha()
     else: 
       messagebox.showerror(title='ERRO', message = 'O código está Incorreto!')
       
-  bt_voltar = Button(janelaAltera, bd=0, image=img_botaovoltar, command=lambda: [janelaAltera.destroy(), tela_login()])
+  bt_voltar = Button(janelaEnviocodigo, 
+                     bd=0, 
+                     image=img_botaovoltar, 
+                     command=lambda: [janelaEnviocodigo.destroy(),tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
-  bt_redefinirsenha = Button(janelaAltera, bd=0, image = img_botaoredefinir)
-
-  bt_verificar = Button(janelaAltera, bd=0, image=img_botaoverificar, command=verificaCodigo())
+  bt_verificar = Button(janelaEnviocodigo, bd=0, image=img_botaoverificar, command=lambda: [verificaCodigo(), print("AUAUUAUAUAUAUAUUA")])
   bt_verificar.place(width=200, height=50, x=360, y=355)
 
-  janelaAltera.mainloop()
+  janelaEnviocodigo.mainloop()
 
+def tela_alterarsenha():
+  janelaAltera = tela("Planner Ártemis - Alterar Senha")
+  
+  img_telaaltera = PhotoImage(file='images/fundos/TelaAlterarSenha2.png')
+  img_botaoredefinir = PhotoImage(file='images/botoes/BotaoRedefinirSenha.png')
+
+  lab_fundo = Label(janelaAltera, image = img_telaaltera)
+  lab_fundo.pack()
+  
+  en_novasenha = Entry(janelaAltera, bd=2, font=("Calibri", 15), justify=CENTER)
+  en_novasenha.place(width=392, height=44, x=252, y=210)
+
+  id = usuario_atual.get_id()
+  bt_redefinirsenha = Button(janelaAltera, bd=0, image = img_botaoredefinir, command=lambda: [usuario.alterar_senha(en_novasenha.get(), id), messagebox.showinfo(title='SUCESSO', message='Senha Alterada com sucesso!'), janelaAltera.destroy(), tela_login()])
+  bt_redefinirsenha.place(width=200, height=50, x=360, y=355)  
+
+  janelaAltera.mainloop()
+  
 def tela_agendamentos():
   # Criando a tela
   janelaAgenda = tela('Planner Ártemis - Agendamentos')
-
 
   # Carregando as imagens
   img_cima = PhotoImage(file='images/fundos/cima.png')

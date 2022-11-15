@@ -105,7 +105,13 @@ class usuario:
     user = acessar_bd('email', 'usuario', 'email', email)
     return False if user else True
 
-  
+  def alterar_senha(senha, id) -> None:
+    i = [senha, id]
+    with conexao:
+      cur = conexao.cursor()
+      query = "UPDATE usuario SET senha=? WHERE id=?"
+      cur.execute(query, i)
+
   def cadastro_user(nome: str, 
                     senha: str, 
                     email: str) -> bool:
@@ -147,7 +153,7 @@ class usuario:
       return False
 
     except EmailIndisponivelError:
-      messagebox.showerror('ATENÇÃO', 'Este nome não está disponível!')
+      messagebox.showerror('ATENÇÃO', 'Este email não está disponível!')
       return False
 
     else:
