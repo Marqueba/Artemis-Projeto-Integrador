@@ -36,6 +36,7 @@ import senhaValida
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import StringVar
 
 
 # Importando tkcalendar
@@ -330,7 +331,7 @@ def tela_enviarcodigo():
                      command=lambda: [janelaEnviocodigo.destroy(),tela_login()])
   bt_voltar.place(width=150, height=50, x=62, y=365)
 
-  bt_verificar = Button(janelaEnviocodigo, bd=0, textvariable = StringVar(), show='*',image=img_botaoverificar, command=lambda: [verificaCodigo()])
+  bt_verificar = Button(janelaEnviocodigo, bd=0, image=img_botaoverificar, command=lambda: [verificaCodigo()])
   bt_verificar.place(width=200, height=50, x=360, y=355)
 
   janelaEnviocodigo.mainloop()
@@ -344,7 +345,7 @@ def tela_alterarsenha():
   lab_fundo = Label(janelaAltera, image = img_telaaltera)
   lab_fundo.pack()
   
-  en_novasenha = Entry(janelaAltera, bd=2, font=("Calibri", 15), justify=CENTER)
+  en_novasenha = Entry(janelaAltera, bd=2, font=("Calibri", 15), textvariable=StringVar(), show='*', justify=CENTER)
   en_novasenha.place(width=392, height=44, x=252, y=210)
 
   id = usuario_atual.get_id()
@@ -354,7 +355,7 @@ def tela_alterarsenha():
                              command=lambda: [usuario.alterar_senha(en_novasenha.get(), id),
                                               messagebox.showinfo(title='SUCESSO', message='Senha Alterada com sucesso!'),
                                               janelaAltera.destroy(),
-                                              tela_login()] if senhaValida.senhaForte(en.novasenha.get()) else []
+                                              tela_login()] if senhaValida.senhaForte(en_novasenha.get()) else []
                             )
   bt_redefinirsenha.place(width=200, height=50, x=360, y=355)  
 
@@ -447,7 +448,7 @@ def tela_agendamentos():
         dia = e_cal.get()
         descricao = en_descricao.get(1.0, 'end')
 
-        lista = agendamento(nome, dia, descricao, valor_id)
+        lista = agendamento(None ,nome, dia, descricao, valor_id)
         try:
           if nome == '':
             raise NomeVazioError  
@@ -521,7 +522,7 @@ def tela_agendamentos():
       )
     
     #Lista para cabeçario
-    tabela_header = ['id', 'Nome', 'Data', 'Descrição']
+    tabela_header = ['Nº', 'Nome', 'Data', 'Descrição']
 
     # Criando a Tabela
     tree = ttk.Treeview(direita,
