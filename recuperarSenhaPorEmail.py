@@ -31,6 +31,7 @@ def enviar_email(email_user: str, nome: str) -> bool or str:
     messagebox.showerror(title = 'ERRO', message = 'Você não está conectado com a Internet!')
     return False
   else:
+    messagebox.showinfo( title="SUCESSO", message=f'Um código foi enviado! Olhe seu email')
     tamanhoCodigo: int = 5
     caracteres: str = string.ascii_uppercase + string.digits
     

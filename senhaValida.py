@@ -25,19 +25,19 @@ class naoContemNumeroError(Exception):
   pass
 
   
-def contemCaractereMaiusculo(senha:str) -> bool:
+def contemCaractereMaiusculo(senha: str) -> bool:
   if re.findall("[A-Z]",senha):
     return True
   return False
 
     
-def contemCaractereMinusculo(senha:str) -> bool:
+def contemCaractereMinusculo(senha: str) -> bool:
   if re.findall("[a-z]",senha):
     return True
   return False
 
     
-def contemCaractereEspecial(senha:str) -> bool:
+def contemCaractereEspecial(senha: str) -> bool:
   l = string.punctuation
   for x in senha:
     if x in l:
@@ -45,7 +45,7 @@ def contemCaractereEspecial(senha:str) -> bool:
   return False
 
     
-def contemNumero(senha:str) -> bool:
+def contemNumero(senha: str) -> bool:
   if re.findall("[0-9]",senha):
     return True
   return False

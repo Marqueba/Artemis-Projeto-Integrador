@@ -67,7 +67,7 @@ if not os.path.isfile("Bancodedados.db"):
 def tela(nome="Planner Ártemis"):
   tela = Tk()
   tela.title(nome)
-  tela.geometry("900x450+610+153")
+  tela.geometry("900x450+300+200")
   tela.resizable(width=False, height=False)
   logo = PhotoImage(file = 'images/logo.png')
   tela.iconphoto(False, logo)
@@ -262,7 +262,6 @@ def tela_ajuda():
                         image=img_botaorecupera, 
                         command=lambda: 
                         [ 
-                          messagebox.showinfo( title="SUCESSO", message=f'Um código foi enviado! Olhe seu email'),
                           salvarCodigo(enviar_email(en_email.get(),en_username.get())),
                           janelaAjuda.destroy(),
                           tela_enviarcodigo(),
@@ -341,6 +340,7 @@ def tela_alterarsenha():
   
   img_telaaltera = PhotoImage(file='images/fundos/TelaAlterarSenha2.png')
   img_botaoredefinir = PhotoImage(file='images/botoes/BotaoRedefinirSenha.png')
+  img_botaovoltar = PhotoImage(file='images/botoes/BotaoVoltar.png')
 
   lab_fundo = Label(janelaAltera, image = img_telaaltera)
   lab_fundo.pack()
@@ -358,6 +358,12 @@ def tela_alterarsenha():
                                               tela_login()] if senhaValida.senhaForte(en_novasenha.get()) else []
                             )
   bt_redefinirsenha.place(width=200, height=50, x=360, y=355)  
+
+  bt_voltar = Button(janelaAltera, 
+                     bd=0, 
+                     image=img_botaovoltar, 
+                     command=lambda: [janelaAltera.destroy(),tela_ajuda()])
+  bt_voltar.place(width=150, height=50, x=62, y=365)
 
   janelaAltera.mainloop()
   
@@ -597,7 +603,7 @@ def login_valido(username, senha):
     return False
 
     
-debug:bool or int = 1 
+debug:bool or int = 0
 if debug:
   # with conexao:
   #   i = ["adm", "adm", "adm"]
@@ -616,5 +622,5 @@ if debug:
     cur.execute(query)
     lista = cur.fetchall()
   print(*lista,sep="\n")
-
+print("ignore este prompt!!")
 tela_inicial()
