@@ -22,9 +22,6 @@ Integrantes:s
 import os
 
 
-# Importando Banco de dados
-import banco
-
 # Importando as classes a serem utilizadas
 from view import usuario, agendamento
 
@@ -35,8 +32,6 @@ import senhaValida
 # Importando o Tkinter
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
-from tkinter import StringVar
 
 
 # Importando tkcalendar
@@ -64,13 +59,15 @@ if not os.path.isfile("Bancodedados.db"):
   os.system('python banco.py')
 
 
-def tela(nome="Planner Ártemis"):
+def tela(nome="Planner Ártemis",bg=0):
   tela = Tk()
   tela.title(nome)
   tela.geometry("900x450+300+200")
   tela.resizable(width=False, height=False)
   logo = PhotoImage(file = 'images/logo.png')
   tela.iconphoto(False, logo)
+  if bg:
+    tela.configure(background=bg)
   return tela
 
 
@@ -102,7 +99,7 @@ def tela_inicial():
 
   
   bt_sobre = Button(janelaInicial, bd=0, image=img_botaosobre, command=lambda: [janelaInicial.destroy(), tela_sobre()])
-  bt_sobre.place(width=120, height=40, x=760, y=13)
+  bt_sobre.place(width=60, height=50, x=788, y=8)
 
   
   janelaInicial.mainloop()
@@ -369,7 +366,7 @@ def tela_alterarsenha():
   
 def tela_agendamentos():
   # Criando a tela
-  janelaAgenda = tela('Planner Ártemis - Agendamentos')
+  janelaAgenda = tela('Planner Ártemis - Agendamentos',bg="#f4f4f5")
 
   # Carregando as imagens
   img_cima = PhotoImage(file='images/fundos/cima.png')
@@ -389,9 +386,9 @@ def tela_agendamentos():
 
   
   # Configurando o Frame que em ocorrerá a visualização da tabela
-  branco = '#000000'
+  branco = '#f4f4f5'
   direita = Frame(janelaAgenda, width=577, height=500, bd=1, bg=branco, relief="raise")
-  direita.pack(padx=1, pady=0)
+  direita.pack(padx=1, pady=1)
 
   
   # Configurando entrada de dados
